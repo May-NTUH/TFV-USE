@@ -34,10 +34,11 @@ apps-script/Code.gs   ← 貼到 Apps Script，不需上傳 GitHub（上傳也�
 | 轉出完整拼接全圖 | `menu-ov.jpg`、`ov-basic.jpg`、`ov-adv.jpg` |
 | 轉出指定框選範圍拼接圖 | `cat-manage.jpg`、`cat-draw.jpg`、`menu-ov.jpg`、`cat-export-adv.jpg` |
 | 專案資料夾結構 | `folder.jpg` |
-| 影像檢視縮放功能鈕 | `zoom-buttons.jpg` |
 | 格線、裁切、比例尺與 Z-stack | `display-tools.jpg` |
 | 螢光顯示與亮度調整（IF） | `fluo-panel.jpg` |
 | 建立框選組別並繪製範圍 | `cat-manage.jpg`、`cat-tools.jpg`、`cat-draw.jpg` |
 | Export FOVs images 參數 | `fov-main.jpg`、`fov-name.jpg` |
 | Export region overview 參數 | `ov-main-basic.jpg`、`ov-main-adv.jpg`、`ov-name.jpg` |
 | 分組輸出（框選範圍）參數 | `cat-basic.jpg`、`cat-adv.jpg`、`cat-result.jpg` |
+
+> 「影像檢視縮放功能鈕」章節使用的 `fn-*.png`（工具列、圖示、小地圖）已內附，不需再補。

@@ -88,3 +88,18 @@ ol>li.grp>.si.sm{max-width:min(calc(100% - 38px),380px)}
 
 /* 截圖待補佔位框 */
 .ph{display:grid;place-items:center;min-height:140px;width:100%;border:2px dashed var(--bd);border-radius:12px;background:var(--acbg);color:var(--mut);font-size:14px;text-align:center;padding:12px;cursor:default}
+
+/* 功能鈕圖示說明（欄位介紹 > 影像檢視縮放功能鈕） */
+.fnbar{margin:6px 0 4px}.fnbar>.si{max-width:100%;margin-top:0}
+.cap{font-size:13px;color:var(--mut);margin-top:6px}
+.fnl{margin-top:10px}
+.fni{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:14px;margin:10px 0;border:1px solid var(--bd);border-radius:14px;background:var(--card)}
+.fic{display:grid;place-items:center;min-width:68px;min-height:68px;padding:8px;border-radius:12px;background:var(--acbg)}
+.fic img{display:block;width:auto;max-width:none;height:auto}
+.fic.w{padding:8px 14px}
+.fnb b{font-size:17px;color:var(--gc)}.fnb p{margin:4px 0 0}
+.fx{margin:10px 0 0;display:inline-block}.fx .si{max-width:150px;margin-top:0}
+.fx figcaption{font-size:12px;color:var(--mut);margin-top:4px}
+.fmore{margin-top:10px}.fmore summary{cursor:pointer;color:var(--c1);font-size:14px}
+.fmore .si{max-width:min(100%,420px)}
+@media(max-width:767px){.fni{grid-template-columns:1fr;gap:10px}.fic{justify-self:start}}
