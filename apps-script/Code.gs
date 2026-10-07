@@ -3,7 +3,7 @@
  * 功能：訪客紀錄(visits)、搜尋紀錄(searches)、意見回饋(feedback)，皆寫入同一份試算表。
  * 修改本檔後，必須：部署 → 管理部署 → 鉛筆 → 版本選「新版本」→ 部署（網址不變）。
  */
-const SPREADSHEET_ID = '請貼上新試算表的ID'; // ← 建議為本 SOP 另建一份新試算表，把網址中 /d/ 與 /edit 之間那串貼這裡
+const SPREADSHEET_ID = '1kyHi5hXBJeJBEj9PLVHi-a8GHbx2RyhbeRNfpixRLGY'; // TissueFAXS SOP 專用試算表 ID
 const SHEETS = {
   visits:   { name: 'visits',   head: ['時間', '工作階段ID', '事件', '頁面', '裝置', '語言', '螢幕', '來源'] },
   searches: { name: 'searches', head: ['時間', '工作階段ID', '關鍵字', '結果數', '裝置'] },
