@@ -109,3 +109,6 @@ ol>li.grp>.si.sm{max-width:min(calc(100% - 38px),380px)}
 .ftag{display:inline-block;margin-left:8px;font-size:12px;background:var(--gc);color:var(--on);padding:0 8px;border-radius:999px}
 .fic{gap:10px;grid-auto-flow:column}
 .fnb ul.sub{margin-top:6px}
+
+.si.md{max-width:min(100%,500px)}
+@media(min-width:768px){.imgs.w23 img{width:66.7%}}
