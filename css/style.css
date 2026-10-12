@@ -112,3 +112,10 @@ ol>li.grp>.si.sm{max-width:min(calc(100% - 38px),380px)}
 
 .si.md{max-width:min(100%,500px)}
 @media(min-width:768px){.imgs.w23 img{width:66.7%}}
+
+.fnind{margin-left:38px}
+.ms{margin-top:8px}
+.ms .st{padding-left:34px}
+.ms .st::before{width:24px;height:24px;line-height:24px;font-size:12px;top:10px}
+.fnb .si.md{max-width:min(100%,440px)}
+@media(max-width:767px){.fnind{margin-left:0}}

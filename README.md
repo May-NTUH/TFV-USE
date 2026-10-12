@@ -30,10 +30,9 @@ apps-script/Code.gs   ← 貼到 Apps Script，不需上傳 GitHub（上傳也�
 |---|---|
 | 轉出單張/多張 FOV 影像 | `flag.jpg`、`menu-fov.jpg`、`fov-dialog.jpg` |
 | 轉出完整拼接全圖 | `menu-ov.jpg`、`ov-basic.jpg`、`ov-adv.jpg` |
-| 轉出指定框選範圍拼接圖 | `cat-manage.jpg`、`cat-draw.jpg`、`menu-ov.jpg`、`cat-export-adv.jpg` |
-| 建立框選組別並繪製範圍 | `cat-manage.jpg`、`cat-tools.jpg`、`cat-draw.jpg` |
+| 轉出指定框選範圍拼接圖 | `menu-ov.jpg`、`cat-export-adv.jpg` |
 | Export FOVs images 參數 | `fov-main.jpg`、`fov-name.jpg` |
 | Export region overview 參數 | `ov-main-basic.jpg`、`ov-main-adv.jpg`、`ov-name.jpg` |
 | 分組輸出（框選範圍）參數 | `cat-basic.jpg`、`cat-adv.jpg`、`cat-result.jpg` |
 
-> 已內附、不需再補：開啟專案（open-1～3）、專案資料夾（folder）、影像檢視縮放、顯示與工具功能鈕、Region Overlay 螢光面板（`fn-*.png`）。
+> 已內附、不需再補：開啟專案、專案資料夾、影像檢視縮放、顯示與工具功能鈕、螢光面板、建立指定框選範圍（`fn-*.png`、`cat-*.png` 等）。
