@@ -3,6 +3,18 @@
    圖檔前綴：無＝文字右側 / ~＝文字下方小圖 / ~~＝文字下方大圖
    提示：「!」開頭＝紅色必看提醒，其餘＝💡小提示
    本指南明視野與螢光樣本共用，差異處在文字中標明 */
+/* 圖片顯示寬度（px，上限；畫面較窄時會自動縮小）
+   原則：各截圖的軟體畫面截取時放大倍率不同，這裡已換算成「看起來大小一致」。
+   沒列在表中的圖（小圖示等）以原始大小顯示。要微調某張圖，只改這裡的數字即可。 */
+window.ZEN_IMG_W={
+ "open-1.jpg":480,"open-2.jpg":860,"open-3.jpg":860,"folder.jpg":560,
+ "fn-toolbar.png":600,"fn-toolbar-if.png":600,"fn-map-demo.png":520,"fn-map-mini.png":164,
+ "fl-open.png":600,"fn-fl-panel.png":557,"fn-fl-range.png":520,"q5-select.png":560,"q5-range.png":320,
+ "fov-flag.png":600,"fov-menu.png":600,"fov-dialog.png":600,"fov-fl.png":480,
+ "ov-menu.png":600,"ov-basic.png":640,"ov-adv.png":640,"ov-fl.png":600,"cat-export-select.png":640,
+ "cat-manage.png":480,"cat-select.png":510,"cat-fixed-new.png":640,"cat-fixed-add.png":640,"cat-fixed-draw.png":600,
+ "cat-other-select.png":500,"cat-other-draw.png":510,"cat-remove.png":500
+};
 window.ZEN_SECTIONS=[
 {id:"q1",ic:"📂",g:"快速上手",t:"開啟專案與選擇 Region",d:"開啟 .aqproj 專案檔，進入要檢視的 Region",im:[],
  st:[["<b>開啟軟體</b>：到 TissueFAXS Viewer 的安裝資料夾，點兩下 <b>TissueFAXS Viewer</b> 應用程式。",null,"^open-1.jpg"],
@@ -30,8 +42,8 @@ window.ZEN_SECTIONS=[
      ["<b>開始轉檔</b>：點擊 <b>Export</b>。"]],
  nt:[["!比例尺大小無法自行指定。"],["!螢光：多色疊圖以當下勾選開啟的顏色為主，需要不同顏色組合時，請更改顯示後分多次轉出。"],["各項細節說明見 <span class=link data-go='p2'>Export region overview 參數</span>。"]]},
 {id:"q4",ic:"🔲",g:"快速上手",t:"轉出指定框選範圍拼接圖",d:"只輸出框選的範圍，且可依組別分開輸出",im:[],pre:[["請先開啟專案並進入目標 Region；螢光樣本請先完成 <span class=link data-go='q5'>螢光顯示調整</span>。"]],
- st:[["<b>建立框選組別</b>：點擊 <b>Subregions</b> 下拉選單 → <b>Manage Categories</b>，輸入組別名稱。",["不同組別可以分開輸出拼圖照片"],"cat-manage.png"],
-     ["<b>繪製框選範圍</b>：點擊 <b>Subregions</b>，選擇組別名稱，用固定或手動框選工具在影像上框選。",null,"cat-select.png"],
+ st:[["<b>建立框選組別</b>：點擊 <b>Subregions</b> 下拉選單 → <b>Manage Categories</b>，輸入組別名稱。",["不同組別可以分開輸出拼圖照片"],"^cat-manage.png"],
+     ["<b>繪製框選範圍</b>：點擊 <b>Subregions</b>，選擇組別名稱，用固定或手動框選工具在影像上框選。",null,"^cat-select.png"],
      ["<b>開啟匯出視窗</b>：點擊 <b>Export</b> 下拉選單 → <b>Export region overview</b>，並選擇 <b>Export only overviews from categories</b>。",null,"^cat-export-select.png"],
      ["<b>設定與輸出</b>：其他設定請參考 <span class=link data-go='p3'>分組輸出（框選範圍）參數</span> 與 <span class=link data-go='p2'>Export region overview 參數</span>，完成後點擊輸出。"]],
  nt:[["!繪製時一次只能選取一個組別，要畫其他組別請先切換組別（細節見 <span class=link data-go='c2'>建立指定框選範圍</span>）。"],["!螢光樣本：多色疊圖以當下勾選開啟的顏色為主，需要不同顏色組合時，請更改顯示後分多次轉出。"]]},
@@ -81,8 +93,8 @@ window.ZEN_SECTIONS=[
      ["<b>指定框選範圍的拼接圖</b> → <b>框選指定區域</b> ＋ <b>Export region overview</b>",["輸出：指定框選範圍的拼接圖，可分組各別輸出","方法：先針對指定區域繪製範圍，再 Export → Export region overview","流程見 <span class=link data-go='q4'>轉出指定框選範圍拼接圖</span>"]]],
  nt:[["陰影校正：明視野建議勾選；螢光<b>請勿勾選</b>。"],["明視野影像的 FOV 原始檔為 JPG，在合適大小範圍內建議以 JPG 作為轉檔格式。"]]},
 {id:"c2",ic:"✏️",g:"轉檔步驟",t:"建立指定框選範圍",d:"Subregions：建立組別、固定／手動框選",im:[],
- st:[["<b>建立框選組別</b>：點擊 <b>Subregions</b> 下拉選單 → <b>Manage Categories</b>。",["在 <b>Name</b> 直接輸入組別名稱","在 <b>Color</b> 選擇框選線條顏色，點擊 <b>OK</b>"],"cat-manage.png"],
-     ["<b>選擇組別並使用框選工具</b>：點擊 <b>Subregions</b> 勾選要繪製的組別，工具列左側才會出現框選工具。",["框選工具分成「固定」與「手動」兩類，依需求使用"],"cat-select.png"]],
+ st:[["<b>建立框選組別</b>：點擊 <b>Subregions</b> 下拉選單 → <b>Manage Categories</b>。",["在 <b>Name</b> 直接輸入組別名稱","在 <b>Color</b> 選擇框選線條顏色，點擊 <b>OK</b>"],"^cat-manage.png"],
+     ["<b>選擇組別並使用框選工具</b>：點擊 <b>Subregions</b> 勾選要繪製的組別，工具列左側才會出現框選工具。",["框選工具分成「固定」與「手動」兩類，依需求使用"],"^cat-select.png"]],
  fn:{ind:1,groups:[{items:[
    {i:"cat-fixed.png",t:"固定框選工具",d:"可指定框選的長寬，連續框選多個相同大小的範圍。",ms:[
      ["點擊 <b>New</b> 建立框選大小；已建立過的大小會留在清單中，可直接點擊使用。","cat-fixed-new.png"],
