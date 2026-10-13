@@ -28,10 +28,8 @@ apps-script/Code.gs   ← 貼到 Apps Script，不需上傳 GitHub（上傳也�
 
 | 章節 | 尚待補的圖檔 |
 |---|---|
-| 轉出單張/多張 FOV 影像 | `flag.jpg`、`menu-fov.jpg`、`fov-dialog.jpg` |
-| 轉出完整拼接全圖 | `menu-ov.jpg`、`ov-basic.jpg`、`ov-adv.jpg` |
 | Export FOVs images 參數 | `fov-main.jpg`、`fov-name.jpg` |
 | Export region overview 參數 | `ov-main-basic.jpg`、`ov-main-adv.jpg`、`ov-name.jpg` |
 | 分組輸出（框選範圍）參數 | `cat-basic.jpg`、`cat-adv.jpg`、`cat-result.jpg` |
 
-> 已內附、不需再補：開啟專案、專案資料夾、影像檢視縮放、顯示與工具功能鈕、螢光面板、Z-stack、建立指定框選範圍、轉出指定框選範圍拼接圖。
+> 快速上手（q1～q5）與欄位介紹、轉檔步驟的截圖都已內附。
