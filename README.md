@@ -32,7 +32,6 @@ apps-script/Code.gs   ← 貼到 Apps Script，不需上傳 GitHub（上傳也�
 | 章節 | 尚待補的圖檔 |
 |---|---|
 | Export FOVs images 參數 | `fov-main.jpg`、`fov-name.jpg` |
-| Export region overview 參數 | `ov-main-basic.jpg`、`ov-main-adv.jpg`、`ov-name.jpg` |
 | 分組輸出（框選範圍）參數 | `cat-basic.jpg`、`cat-adv.jpg`、`cat-result.jpg` |
 
-> 快速上手（q1～q5）與欄位介紹、轉檔步驟的截圖都已內附。
+> Export region overview 頁面的截圖已內附。
