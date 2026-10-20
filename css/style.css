@@ -137,3 +137,6 @@ ol>li.grp>.si.sm{max-width:min(calc(100% - 38px),380px)}
 
 ul.sub.nb{list-style:none;padding-left:4px}
 .imgs.imb+.pbk{margin-top:12px}
+
+ul.sub{list-style-type:disc}
+ul.sub.nb{list-style:none}
