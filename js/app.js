@@ -4,7 +4,7 @@ const S=window.ZEN_SECTIONS,GAS=(window.ZEN_CONFIG||{}).GAS_URL||"";
 const GR={"快速上手":{c:"--c1",i:"🚀"},"欄位介紹":{c:"--c2",i:"🧭"},"轉檔步驟":{c:"--c3",i:"🔁"},"參數設定":{c:"--c4",i:"🛠️"},"問題與回饋":{c:"--c5",i:"❓"}};
 const $=s=>document.querySelector(s),m=$("#m"),nav=$("#nav");
 const gc=s=>`style="--gc:var(${GR[s.g].c})"`;
-const sub=a=>a?"<ul class=sub>"+a.map(y=>"<li>"+y+"</li>").join("")+"</ul>":"";
+const sub=a=>a?"<ul class=\"sub"+(/^<b>[①-⑩]/.test(a[0])?" nb":"")+"\">"+a.map(y=>"<li>"+y+"</li>").join("")+"</ul>":"";
 const pic=f=>{const w=f.startsWith("~~")||/^init/.test(f),s=!w&&f[0]=="~",md=f[0]=="^";return `<img class="si${w?" wide":s?" sm":md?" md":""}" loading=lazy src="${img(f.replace(/^[~^]+/,""))}"${iw(f.replace(/^[~^]+/,""))} alt="">`};
 const iw=n=>{const w=(window.ZEN_IMG_W||{})[n];return w?` style="max-width:min(100%,${w}px)"`:""};
 const il=f=>f[0]=="~"||f[0]=="^"||/^init/.test(f);
@@ -14,7 +14,7 @@ const steps=(a,n0)=>{let n=n0||0;return "<ol>"+a.map(x=>{
  const t=x[0]+sub(x[1])+(x[4]||"");
  if(!x[2])return "<li data-n="+(++n)+">"+t+"</li>";
  const L=[].concat(x[2]);
- if(L.every(il))return "<li data-n="+(++n)+">"+t+L.map(pic).join("")+"</li>";
+ if(L.every(il))return "<li data-n="+(++n)+">"+t+L.map(pic).join("")+(x[5]?sub([x[5][0]])+pic(x[5][1]):"")+"</li>";
  return "<li class=row data-n="+(++n)+"><div class=rw><div>"+t+"</div>"+pic(L[0])+"</div></li>"}).join("")+"</ol>"};
 let lastView="";
 const fbForm=()=>`<div class=fbf><h3>💬 留下您的問題或建議</h3><label>類型<select id=fbType><option>內容有誤</option><option>看不懂/不清楚</option><option>軟體操作問題</option><option>功能建議</option><option>其他</option></select></label><label>相關章節（選填）<select id=fbPage><option value="整體/其他">整體/其他</option>${S.filter(s=>s.id!="faq"&&s.id!="feedback").map(s=>`<option value="${s.t}"${s.id==lastView?" selected":""}>${s.t}</option>`).join("")}</select></label><label>內容<textarea id=fbMsg maxlength=500 rows=5 placeholder="請描述遇到的問題或建議（請勿填寫個人或實驗機密資料）"></textarea></label><label>聯絡方式（選填）<input id=fbC maxlength=80 placeholder="Email 或分機，希望回覆時再填"></label><input id=fbHp tabindex=-1 autocomplete=off aria-hidden=true style="position:absolute;left:-9999px"><div class=fbar><span id=fbStat></span><button class="btn pri" id=fbSend>送出</button></div></div>`;
