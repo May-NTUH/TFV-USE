@@ -1,7 +1,7 @@
 /* TissueFAXS Viewer 操作指南主程式：導覽、搜尋、訪客紀錄（Google Sheet） */
 (function(){
 const S=window.ZEN_SECTIONS,GAS=(window.ZEN_CONFIG||{}).GAS_URL||"";
-const GR={"快速上手":{c:"--c1",i:"🚀"},"欄位介紹":{c:"--c2",i:"🧭"},"轉檔步驟":{c:"--c3",i:"🔁"},"參數設定":{c:"--c4",i:"🛠️"},"問題與回饋":{c:"--c5",i:"❓"}};
+const GR={"快速上手":{c:"--c1",i:"🚀"},"欄位介紹":{c:"--c2",i:"🧭"},"轉檔步驟":{c:"--c3",i:"🔁"},"詳細設定":{c:"--c4",i:"🛠️"},"問題與回饋":{c:"--c5",i:"❓"}};
 const $=s=>document.querySelector(s),m=$("#m"),nav=$("#nav");
 const gc=s=>`style="--gc:var(${GR[s.g].c})"`;
 const sub=a=>a?"<ul class=\"sub"+(/^<b>[①-⑩]/.test(a[0])?" nb":"")+"\">"+a.map(y=>"<li>"+y+"</li>").join("")+"</ul>":"";
@@ -28,7 +28,7 @@ const thumbsHtml=t=>`<div class=thumbs>${t.map(x=>`<figure><img class=si loading
 const partHtml=p=>`<h3 class=fgh>${p.h}</h3>${p.img?`<div class="imgs imb">${p.img.map(n=>`<img loading=lazy src="${img(n)}"${iw(n)} alt="${p.h}">`).join("")}</div>`:""}${p.items?blocks(p.items):steps(p.st)}${p.more?`<details class=fmore><summary>${p.more[0]}</summary><img class=si loading=lazy src="${img(p.more[1])}"${iw(p.more[1])} alt=""></details>`:""}${p.nt?notes(p.nt):""}`;
 function card(s,open){const sp=s.im.length&&typeof s.im[0]=="string";return `<article class=card ${gc(s)}><h2><i>${s.ic}</i>${s.t}</h2><div class=g><span class=tag>${s.g}</span>${s.d}</div>${sp?"<div class=split><div>":""}${s.pre?notes(s.pre):""}${steps(s.st)}${s.thumbs?thumbsHtml(s.thumbs):""}${s.parts?s.parts.map(partHtml).join(""):""}${s.imb?`<div class="imgs imb">${s.imb.map(n=>`<img loading=lazy src="${img(n)}"${iw(n)} alt="${s.t}">`).join("")}</div>`:""}${s.fn?fnList(s.fn):""}${s.st2?steps(s.st2,s.st.length):""}${notes(s.nt)}${s.faq?faq(s.faq,open):""}${s.post?notes(s.post):""}${s.fb?fbForm():""}${sp?"</div>":""}${s.im.length?`<div class=imgs>${s.im.map(n=>`<img loading=lazy src="${img(n)}"${iw(n)} alt="${s.t} 圖示">`).join("")}</div>`:""}${sp?"</div>":""}</article>`}
 function menu(cur){let h="",g="";S.forEach(s=>{if(s.g!=g){g=s.g;h+=`<h4 style="--gc:var(${GR[g].c})">${GR[g].i} ${g}</h4>`}h+=`<a href="#${s.id}" ${gc(s)} class="${s.id==cur?"on":""}"><i class=dot></i>${s.t}</a>`});nav.innerHTML=h}
-function home(){menu("");const tk=["q1","q5","q2","q3","q4","c1","faq"].map(id=>S.find(s=>s.id==id));
+function home(){menu("");const tk=["c1","q1","q5","q2","q3","q4","faq"].map(id=>S.find(s=>s.id==id));
  m.innerHTML=`<section class=hero><h1>🧫 TissueFAXS Viewer 操作指南</h1><p>明視野與螢光樣本通用。選擇你要做的事，或用上方搜尋框找關鍵字。</p></section><div class=tasks>${tk.map(s=>`<button class=task ${gc(s)} data-go="${s.id}"><i>${s.ic}</i><b>${s.t}</b><span>${s.d}</span></button>`).join("")}</div>`}
 function view(id){const i=S.findIndex(s=>s.id==id);if(i<0)return home();menu(id);if(id!="faq"&&id!="feedback")lastView=id;
  m.innerHTML=card(S[i]).replace(" loading=lazy"," fetchpriority=high");scrollTo(0,0);log("view",id)}
