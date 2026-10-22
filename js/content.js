@@ -82,7 +82,7 @@ window.ZEN_SECTIONS=[
 {id:"q2",ic:"🧱",g:"轉檔步驟",t:"匯出單張/多張 FOV 影像",d:"挑選要轉檔的 FOV（原始單張影像）並匯出",im:[],
  st:[["<b>選取 FOV</b>：點擊工具列的<b>紅色旗幟</b>圖示，再到影像視窗中點擊指定的 FOV。",["<b>新增</b>：點擊的 FOV 會出現<b>主旗幟</b>，並環繞 8 個<b>副旗幟</b>，形成九宮格排列","<b>取消</b>：點擊已產生的副旗幟可取消單張；點擊主旗幟會同時取消整個九宮格範圍","匯出多張時，請自行以主、副旗幟標滿所有指定的張數"],"^fov-flag.png"],
      ["<b>開啟匯出視窗</b>：點擊 <b>Export</b> 下拉選單 → <b>Fields of View…</b>。",null,"~~fov-menu.png"],
-     ["<b>設定匯出參數</b>：依圖中編號依序設定。",["<b>①</b> 設定儲存資料夾（Save to folder）","<b>②</b> 選擇轉檔格式（JPG／TIF）","<b>③</b> 選擇匯出範圍：<b>All</b>（完整樣本的全部影像）／<b>Flags Only</b>（僅主旗幟標誌處）／<b>Flags With Neighbors</b>（主旗幟與周邊副旗幟標誌處）","<b>④</b> 設定陰影校正（Apply Illumination Correction）：明視野<b>勾選</b>；螢光<b>取消勾選</b>","<b>⑤</b> 設定比例尺（Scale bar）：顏色與位置"],["^fov-dialog.png"],null,null,["<b>螢光樣本會多一個選項</b>：設定匯出影像性質（套色疊圖 Overlay／單色影像 Original）","^IF.png"]],
+     ["<b>設定匯出參數</b>：依圖中編號依序設定。",["<b>①</b> 設定儲存資料夾（Save to folder）","<b>②</b> 選擇轉檔格式（JPG／TIF）","<b>③</b> 選擇匯出範圍：<b>All</b>（完整樣本）／<b>Flags Only</b>（僅主旗幟）／<b>Flags With Neighbors</b>（主旗幟與周邊副旗幟）","<b>④</b> 設定陰影校正（Apply Illumination Correction）：明視野<b>勾選</b>；螢光<b>取消勾選</b>","<b>⑤</b> 設定比例尺（Scale bar）：顏色與位置"],["^fov-dialog.png"],null,null,["<b>螢光樣本會多一個選項</b>：設定匯出影像性質（套色疊圖 Overlay／單色影像 Original）","^IF.png"]],
      ["<b>開始轉檔</b>：點擊 <b>Save</b>。"]],
  nt:[["各項細節說明見 <span class=link data-go='p1'>Export FOVs images</span>。"]]},
 {id:"q3",ic:"🗺️",g:"轉檔步驟",t:"匯出完整拼接全圖",d:"把整個 Region 匯出成一張拼接大圖",im:[],
