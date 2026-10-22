@@ -65,7 +65,9 @@ const geoP=(async()=>{
  return g})();
 function log(ev,p){if(!GAS)return;const k=ev+p;if(seen[k])return;seen[k]=1;
  let ref="direct";try{if(document.referrer)ref=new URL(document.referrer).hostname}catch(e){}
- geoP.then(g=>post(Object.assign({ev,p:p||"",lang:navigator.language,scr:screen.width+"x"+screen.height,ref},g)))}
+ const o={ev,p:p||"",lang:navigator.language,scr:screen.width+"x"+screen.height,ref};
+ /* 地區資料只附在「開啟網站」那一筆；章節瀏覽不需要，也不必等地區查詢 */
+ if(ev=="open")geoP.then(g=>post(Object.assign(o,g)));else post(o)}
 /* 搜尋紀錄：停止輸入 1.2 秒後才記錄，同一關鍵字每次造訪只記一次 */
 let tm;const seenS={};
 function logSearch(q,n){clearTimeout(tm);tm=setTimeout(()=>{if(!GAS||seenS[q])return;seenS[q]=1;post({ev:"search",q:q.slice(0,60),n})},1200)}
