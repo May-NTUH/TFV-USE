@@ -1,32 +1,39 @@
-/* ZEN 操作指南主程式：導覽、搜尋、訪客紀錄（Google Sheet） */
+/* TissueFAXS Viewer 操作指南主程式：導覽、搜尋、訪客紀錄（Google Sheet） */
 (function(){
 const S=window.ZEN_SECTIONS,GAS=(window.ZEN_CONFIG||{}).GAS_URL||"";
-const GR={"快速上手":{c:"--c1",i:"🚀"},"欄位介紹":{c:"--c2",i:"🧭"},"轉檔步驟":{c:"--c3",i:"🔁"},"參數設定":{c:"--c4",i:"🛠️"},"問題與回饋":{c:"--c5",i:"❓"}};
+const GR={"快速上手":{c:"--c1",i:"🚀"},"欄位介紹":{c:"--c2",i:"🧭"},"轉檔步驟":{c:"--c3",i:"🔁"},"詳細設定":{c:"--c4",i:"🛠️"},"問題與回饋":{c:"--c5",i:"❓"}};
 const $=s=>document.querySelector(s),m=$("#m"),nav=$("#nav");
 const gc=s=>`style="--gc:var(${GR[s.g].c})"`;
-const sub=a=>a?"<ul class=sub>"+a.map(y=>"<li>"+y+"</li>").join("")+"</ul>":"";
-const pic=f=>{const w=f.startsWith("~~")||/^init/.test(f),s=!w&&f[0]=="~";return `<img class="si${w?" wide":s?" sm":""}" loading=lazy src="${img(f.replace(/^~+/,""))}" alt="">`};
-const il=f=>f[0]=="~"||/^init/.test(f);
-const steps=a=>{let n=0;return "<ol>"+a.map(x=>{
+const sub=a=>a?"<ul class=\"sub"+(/^<b>[①-⑩]/.test(a[0])?" nb":"")+"\">"+a.map(y=>"<li>"+y+"</li>").join("")+"</ul>":"";
+const pic=f=>{const w=f.startsWith("~~")||/^init/.test(f),s=!w&&f[0]=="~",md=f[0]=="^";return `<img class="si${w?" wide":s?" sm":md?" md":""}" loading=lazy src="${img(f.replace(/^[~^]+/,""))}"${iw(f.replace(/^[~^]+/,""))} alt="">`};
+const iw=n=>{const w=(window.ZEN_IMG_W||{})[n];return w?` style="max-width:min(100%,${w}px)"`:""};
+const il=f=>f[0]=="~"||f[0]=="^"||/^init/.test(f);
+const steps=(a,n0)=>{let n=n0||0;return "<ol>"+a.map(x=>{
  if(x[3]){const sts=x[3].map(g=>"<div class=st data-n="+(++n)+">"+g[0]+sub(g[1])+"</div>").join("");
   return il(x[2])?"<li class=grp>"+sts+pic(x[2])+"</li>":"<li class='row grp'><div class=rw><div>"+sts+"</div>"+pic(x[2])+"</div></li>"}
- const t=x[0]+sub(x[1]);
+ const t=x[0]+sub(x[1])+(x[4]||"");
  if(!x[2])return "<li data-n="+(++n)+">"+t+"</li>";
  const L=[].concat(x[2]);
- if(L.every(il))return "<li data-n="+(++n)+">"+t+L.map(pic).join("")+"</li>";
+ if(L.every(il))return "<li data-n="+(++n)+">"+t+L.map(pic).join("")+(x[5]?sub([x[5][0]])+pic(x[5][1]):"")+"</li>";
  return "<li class=row data-n="+(++n)+"><div class=rw><div>"+t+"</div>"+pic(L[0])+"</div></li>"}).join("")+"</ol>"};
 let lastView="";
 const fbForm=()=>`<div class=fbf><h3>💬 留下您的問題或建議</h3><label>類型<select id=fbType><option>內容有誤</option><option>看不懂/不清楚</option><option>軟體操作問題</option><option>功能建議</option><option>其他</option></select></label><label>相關章節（選填）<select id=fbPage><option value="整體/其他">整體/其他</option>${S.filter(s=>s.id!="faq"&&s.id!="feedback").map(s=>`<option value="${s.t}"${s.id==lastView?" selected":""}>${s.t}</option>`).join("")}</select></label><label>內容<textarea id=fbMsg maxlength=500 rows=5 placeholder="請描述遇到的問題或建議（請勿填寫個人或實驗機密資料）"></textarea></label><label>聯絡方式（選填）<input id=fbC maxlength=80 placeholder="Email 或分機，希望回覆時再填"></label><input id=fbHp tabindex=-1 autocomplete=off aria-hidden=true style="position:absolute;left:-9999px"><div class=fbar><span id=fbStat></span><button class="btn pri" id=fbSend>送出</button></div></div>`;
 const faq=(a,o)=>a.map(x=>{const t=(S.find(s=>s.id==x[3])||{}).t||"";return `<details class=fq${o?" open":""}><summary>${x[0]}</summary><div class=fb><p><b>可能原因：</b>${x[1]}</p><p><b>解決方式：</b>${x[2]}</p>${t?`<span class=link data-go="${x[3]}">前往：${t} →</span>`:""}</div></details>`}).join("");
 const notes=a=>a.flat().map(n=>n[0]=="!"?"<div class='note must'>⚠️ "+n.slice(1)+"</div>":"<div class=note>💡 "+n+"</div>").join("");
+const fnItem=o=>{const I=[].concat(o.i),xs=o.xs||(o.x?[o.x]:[]);return `<div class=fni><div class="fic${I.length>1||o.w?" w":""}">${I.map(x=>`<img src="${img(x)}" alt="${o.t}">`).join("")}</div><div class=fnb><b>${o.t}</b>${o.tag?`<span class=ftag>${o.tag}</span>`:""}<p>${o.d}</p>${sub(o.sub)}${o.ms?`<div class=ms>${o.ms.map((m,k)=>`<div class=st data-n=${k+1}>${m[0]}${m[1]?`<img class="si md" loading=lazy src="${img(m[1])}"${iw(m[1])} alt="">`:""}${m[2]?`<div class=note>💡 ${m[2]}</div>`:""}</div>`).join("")}</div>`:""}${xs.length?`<div class=fxs>${xs.map(x=>`<figure class=fx><img class=si loading=lazy src="${img(x[0])}"${iw(x[0])} alt=""><figcaption>${x[1]}</figcaption></figure>`).join("")}</div>`:""}${o.more?`<details class=fmore><summary>${o.more[0]}</summary><img class=si loading=lazy src="${img(o.more[1])}"${iw(o.more[1])} alt=""></details>`:""}</div></div>`};
+const fnList=f=>`<div class="${f.ind?"fnind":""}">`+(f.bar?`<div class=fnbar><img class=si loading=lazy src="${img(f.bar)}"${iw(f.bar)} alt="">${f.cap?`<div class=cap>${f.cap}</div>`:""}</div>`:"")+(f.groups||[{items:f.items}]).map(g=>`${g.h?`<h3 class=fgh>${g.h}</h3>`:""}${g.s?`<div class=fgs>${g.s}</div>`:""}<div class=fnl>${g.items.map(fnItem).join("")}</div>`).join("")+"</div>";
 const img=n=>typeof n=="number"?`images/slide-${String(n).padStart(2,"0")}.jpg`:"images/"+n;
-function card(s,open){const sp=s.im.length&&typeof s.im[0]=="string";return `<article class=card ${gc(s)}><h2><i>${s.ic}</i>${s.t}</h2><div class=g><span class=tag>${s.g}</span>${s.d}</div>${sp?"<div class=split><div>":""}${s.pre?notes(s.pre):""}${steps(s.st)}${notes(s.nt)}${s.faq?faq(s.faq,open):""}${s.post?notes(s.post):""}${s.fb?fbForm():""}${sp?"</div>":""}${s.im.length?`<div class=imgs>${s.im.map(n=>`<img loading=lazy src="${img(n)}" alt="${s.t} 圖示">`).join("")}</div>`:""}${sp?"</div>":""}</article>`}
+const blocks=a=>"<div class=pbk>"+a.map((o,k)=>`<div class=st data-n=${k+1}><b>${o.t}</b>${o.d?`：${o.d}`:""}${o.img?[].concat(o.img).map(n=>`<img class=si loading=lazy src="${img(n)}"${iw(n)} alt="">`).join(""):""}${sub(o.sub)}${o.tip||""}</div>`).join("")+"</div>";
+const thumbsHtml=t=>`<div class=thumbs>${t.map(x=>`<figure><img class=si loading=lazy src="${img(x[0])}" alt="${x[1]}"><figcaption>${x[1]}</figcaption></figure>`).join("")}</div><div class=cap>點擊縮圖可放大；下方依序以局部截圖對照說明。</div>`;
+const partHtml=p=>`<h3 class=fgh>${p.h}</h3>${p.img?`<div class="imgs imb">${p.img.map(n=>`<img loading=lazy src="${img(n)}"${iw(n)} alt="${p.h}">`).join("")}</div>`:""}${p.items?blocks(p.items):steps(p.st)}${p.more?`<details class=fmore><summary>${p.more[0]}</summary><img class=si loading=lazy src="${img(p.more[1])}"${iw(p.more[1])} alt=""></details>`:""}${p.nt?notes(p.nt):""}`;
+const dlList=a=>"<div class=dls>"+a.map(x=>`<a class=dl href="${x.u}" target=_blank rel="noopener noreferrer"><i>${x.i}</i><span><b>${x.t}</b><em>${x.d}</em></span><u>下載 ⬇</u></a>`).join("")+"</div>";
+function card(s,open){const sp=s.im.length&&typeof s.im[0]=="string";return `<article class=card ${gc(s)}><h2><i>${s.ic}</i>${s.t}</h2><div class=g><span class=tag>${s.g}</span>${s.d}</div>${sp?"<div class=split><div>":""}${s.pre?notes(s.pre):""}${steps(s.st)}${s.thumbs?thumbsHtml(s.thumbs):""}${s.parts?s.parts.map(partHtml).join(""):""}${s.imb?`<div class="imgs imb">${s.imb.map(n=>`<img loading=lazy src="${img(n)}"${iw(n)} alt="${s.t}">`).join("")}</div>`:""}${s.fn?fnList(s.fn):""}${s.st2?steps(s.st2,s.st.length):""}${s.dl?dlList(s.dl):""}${notes(s.nt)}${s.faq?faq(s.faq,open):""}${s.post?notes(s.post):""}${s.fb?fbForm():""}${sp?"</div>":""}${s.im.length?`<div class=imgs>${s.im.map(n=>`<img loading=lazy src="${img(n)}"${iw(n)} alt="${s.t} 圖示">`).join("")}</div>`:""}${sp?"</div>":""}</article>`}
 function menu(cur){let h="",g="";S.forEach(s=>{if(s.g!=g){g=s.g;h+=`<h4 style="--gc:var(${GR[g].c})">${GR[g].i} ${g}</h4>`}h+=`<a href="#${s.id}" ${gc(s)} class="${s.id==cur?"on":""}"><i class=dot></i>${s.t}</a>`});nav.innerHTML=h}
-function home(){menu("");const tk=["q3","q4","q2","q1","q5","c2","faq"].map(id=>S.find(s=>s.id==id));
- m.innerHTML=`<section class=hero><h1>🔬 ZEISS ZEN lite 影像處理與轉檔操作</h1><p>選擇你要做的事，或用上方搜尋框找關鍵字。</p></section><div class=tasks>${tk.map(s=>`<button class=task ${gc(s)} data-go="${s.id}"><i>${s.ic}</i><b>${s.t}</b><span>${s.d}</span></button>`).join("")}</div>`}
+function home(){menu("");const tk=["c1","q1","q5","q2","q3","q4","dl","faq"].map(id=>S.find(s=>s.id==id));
+ m.innerHTML=`<section class=hero><h1>🧫 TissueFAXS Viewer 操作指南</h1><p>明視野與螢光樣本通用。選擇你要做的事，或用上方搜尋框找關鍵字。</p></section><div class=tasks>${tk.map(s=>`<button class=task ${gc(s)} data-go="${s.id}"><i>${s.ic}</i><b>${s.t}</b><span>${s.d}</span></button>`).join("")}</div>`}
 function view(id){const i=S.findIndex(s=>s.id==id);if(i<0)return home();menu(id);if(id!="faq"&&id!="feedback")lastView=id;
  m.innerHTML=card(S[i]).replace(" loading=lazy"," fetchpriority=high");scrollTo(0,0);log("view",id)}
-function search(v){v=v.trim().toLowerCase();if(!v){clearTimeout(tm);return route()}menu("");const tx=x=>JSON.stringify(x).replace(/[\w~-]+\.jpg/g," ").replace(/<[^>]*>/g,"");const r=S.filter(s=>(s.t+s.d+s.g+tx(s.st)+tx(s.nt)+tx(s.faq||[])).toLowerCase().includes(v));logSearch(v,r.length);m.innerHTML=r.length?r.map(s=>card(s,true)).join(""):"<div class=card>找不到符合的內容，請換個關鍵字。</div>"}
+function search(v){v=v.trim().toLowerCase();if(!v)return route();menu("");const r=S.filter(s=>(s.t+s.d+s.g+JSON.stringify(s.st)+JSON.stringify(s.nt)+JSON.stringify(s.fn||[])+JSON.stringify(s.parts||[])+JSON.stringify(s.thumbs||[])+JSON.stringify(s.st2||[])+JSON.stringify(s.faq||[])+JSON.stringify(s.dl||[])).toLowerCase().includes(v));logSearch(v,r.length);m.innerHTML=r.length?r.map(s=>card(s,true)).join(""):"<div class=card>找不到符合的內容，請換個關鍵字。</div>"}
 function route(){const h=location.hash.slice(1);$("#q").value="";h?view(h):home()}
 addEventListener("hashchange",route);
 $("#q").addEventListener("input",e=>search(e.target.value));
@@ -35,10 +42,10 @@ const setNav=o=>{document.body.classList.toggle("navopen",o);$("#menuBtn").setAt
 $("#menuBtn").onclick=e=>{e.stopPropagation();setNav(!document.body.classList.contains("navopen"))};
 document.addEventListener("click",e=>{if(!e.target.closest("#menuBtn"))setNav(false)});
 addEventListener("resize",()=>{if(innerWidth>=768)setNav(false)});
-addEventListener("keydown",e=>{if(e.key=="Escape"){setNav(false);$("#lb").style.display="none"}});
+addEventListener("keydown",e=>{if(e.key=="Escape")setNav(false)});
 $("#logo").onclick=()=>{location.hash="";route()};
-document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g){if(location.hash.slice(1)==g.dataset.go)route();else location.hash=g.dataset.go}
-  if(e.target.matches(".imgs img,.si")){$("#lbi").src=e.target.src;$("#lb").style.display="flex"}if(e.target.closest("#lb"))$("#lb").style.display="none"});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)location.hash=g.dataset.go;
+  if(e.target.matches(".imgs img,img.si")){$("#lbi").src=e.target.src;$("#lb").style.display="flex"}if(e.target.closest("#lb"))$("#lb").style.display="none"});
 
 /* ---- 訪客紀錄 → Google Sheet（Apps Script） ---- */
 let sid;try{sid=sessionStorage.getItem("sid")||Math.random().toString(36).slice(2)+Date.now().toString(36);sessionStorage.setItem("sid",sid)}catch(e){sid=Math.random().toString(36).slice(2)}
@@ -59,7 +66,9 @@ const geoP=(async()=>{
  return g})();
 function log(ev,p){if(!GAS)return;const k=ev+p;if(seen[k])return;seen[k]=1;
  let ref="direct";try{if(document.referrer)ref=new URL(document.referrer).hostname}catch(e){}
- geoP.then(g=>post(Object.assign({ev,p:p||"",lang:navigator.language,scr:screen.width+"x"+screen.height,ref},g)))}
+ const o={ev,p:p||"",lang:navigator.language,scr:screen.width+"x"+screen.height,ref};
+ /* 地區資料只附在「開啟網站」那一筆；章節瀏覽不需要，也不必等地區查詢 */
+ if(ev=="open")geoP.then(g=>post(Object.assign(o,g)));else post(o)}
 /* 搜尋紀錄：停止輸入 1.2 秒後才記錄，同一關鍵字每次造訪只記一次 */
 let tm;const seenS={};
 function logSearch(q,n){clearTimeout(tm);tm=setTimeout(()=>{if(!GAS||seenS[q])return;seenS[q]=1;post({ev:"search",q:q.slice(0,60),n})},1200)}
@@ -71,18 +80,14 @@ document.addEventListener("click",e=>{if(e.target.id!="fbSend")return;
  if(msg.length<2){sx.textContent="請先輸入內容";return}
  if(!GAS){sx.textContent="回饋功能尚未啟用";return}
  if(Date.now()-lastFb<30000){sx.textContent="請稍候再送出";return}
- lastFb=Date.now();const btn=$("#fbSend");btn.disabled=true;sx.textContent="送出中…";
- /* 回饋改用可讀取回應的 fetch（不用 no-cors），才能確認後端真的寫入成功 */
- (async()=>{try{
-  const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),15000);
-  const r=await fetch(GAS,{method:"POST",headers:{"Content-Type":"text/plain"},signal:ctl.signal,
-   body:JSON.stringify({sid,dev:innerWidth<800?"mobile":"desktop",ev:"feedback",t:$("#fbType").value,p:$("#fbPage").value,msg:msg.slice(0,500),c:$("#fbC").value.trim().slice(0,80)})});
-  clearTimeout(to);const j=await r.json();
-  if(!j.ok)throw 0;
-  $("#fbMsg").value="";$("#fbC").value="";sx.textContent="✅ 已送出，謝謝您的回饋！";
- }catch(err){lastFb=0;sx.textContent="⚠️ 送出失敗，內容已保留，請稍後再試"}
- btn.disabled=false})()});
+ lastFb=Date.now();
+ post({ev:"feedback",t:$("#fbType").value,p:$("#fbPage").value,msg:msg.slice(0,500),c:$("#fbC").value.trim().slice(0,80)});
+ $("#fbMsg").value="";$("#fbC").value="";sx.textContent="✅ 已送出，謝謝您的回饋！"});
 async function showCount(){const el=$("#cnt");if(!GAS||!el)return;
  try{const r=await(await fetch(GAS+"?action=count")).json();if(r.ok)el.textContent="👥 累計訪客 "+r.total+" 人次"}catch(e){}}
+/* 截圖尚未放入 images/ 時，顯示「截圖待補」佔位框，避免破圖 */
+document.addEventListener("error",e=>{const t=e.target;if(!t||t.tagName!="IMG"||t.id=="lbi"||!t.closest("#m"))return;
+ const d=document.createElement("div");d.className=(t.className+" ph").trim();
+ d.textContent="📷 截圖待補："+decodeURIComponent((t.getAttribute("src")||"").split("/").pop());t.replaceWith(d)},true);
 route();log("open","");addEventListener("load",()=>setTimeout(showCount,300));
 })();
