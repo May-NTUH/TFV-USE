@@ -13,4 +13,8 @@ window.ZEN_SECTIONS.push({id:"faq",ic:"❓",g:"問題與回饋",t:"常見問題"
 ["螢光影像背景太亮，或訊號太暗","螢光亮度範圍尚未調整。","點擊 Region Overlay… → 點擊 Range：在 Range 設定中，Upper 調低可增加 intensity；Lower 調高可降低 background。","f4"],
 ["陰影校正圖示顯示 OFF，是已經關閉了嗎？","圖示標籤顯示的是「點擊後的動作」：顯示 OFF 代表目前是開啟狀態。","螢光影像一般建議不要開啟陰影校正；圖示顯示 ON 才代表目前為關閉。需要關閉時，點擊顯示 OFF 的圖示即可。","f3"],
 ],post:[["找不到答案？請到 <span class=link data-go='feedback'>意見回饋</span> 留下問題或建議。"]]});
+window.ZEN_SECTIONS.push({id:"dl",ic:"📥",g:"問題與回饋",t:"軟體與說明書下載",d:"Viewer 軟體、PDF 說明書",im:[],st:[],nt:["Viewer 為免安裝（可攜式）軟體，僅支援 Windows；下載後請解壓縮整個資料夾再執行。","下載連結為院內檔案分享空間，若無法開啟，請確認網路環境，或到「意見回饋」告訴我們。"],dl:[
+{i:"💾",t:"TissueFAXS Viewer 軟體",d:"免安裝版，Windows 7 SP2（含）以上",u:"https://aep.ntuh.gov.tw/public.php?service=files&t=1oiKOGtcwMrWPLWv_ousPisYr-iucL1Mmi08ABnJQKgqXEA2n95KpVhAGL9qoS-6"},
+{i:"📄",t:"PDF 說明書（明視野版本）",d:"明視野樣本操作 SOP",u:"https://aep.ntuh.gov.tw/public.php?service=files&t=n4HnkL02G1gZ37CY_DOO9qtjW8DzygZfFDh7cQhODS2xB_74e_nhESQV0ruqcBxe"},
+{i:"📄",t:"PDF 說明書（螢光版本）",d:"螢光樣本操作 SOP",u:"https://aep.ntuh.gov.tw/public.php?service=files&t=DJci8qqv175079KbtMBd-A8D48tG_4vCZ37RjJXBMNvIc5SqU2iudFXGFgrXUdU1"}]});
 window.ZEN_SECTIONS.push({id:"feedback",ic:"💬",g:"問題與回饋",t:"意見回饋",d:"留下您的問題或建議",im:[],st:[],nt:[],fb:true});
