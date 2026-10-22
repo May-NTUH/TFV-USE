@@ -140,3 +140,12 @@ ul.sub.nb{list-style:none;padding-left:4px}
 
 ul.sub{list-style-type:disc}
 ul.sub.nb{list-style:none}
+
+/* 下載區塊 */
+.dls{display:grid;gap:10px;margin:14px 0}
+.dl{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--gc);border-radius:14px;padding:14px;color:var(--tx);text-decoration:none;box-shadow:var(--sh);transition:.15s}
+.dl:hover{transform:translateY(-2px);border-color:var(--gc)}
+.dl i{font-style:normal;font-size:28px}
+.dl span{flex:1;min-width:0}.dl b{display:block;color:var(--gc)}.dl em{font-style:normal;font-size:14px;color:var(--mut)}
+.dl u{text-decoration:none;white-space:nowrap;padding:7px 14px;border-radius:999px;background:var(--gc);color:var(--on);font-size:14px}
+/* 下載專區 */
