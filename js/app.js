@@ -51,6 +51,10 @@ document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g
 let sid;try{sid=sessionStorage.getItem("sid")||Math.random().toString(36).slice(2)+Date.now().toString(36);sessionStorage.setItem("sid",sid)}catch(e){sid=Math.random().toString(36).slice(2)}
 const seen={};
 function post(o){if(!GAS)return;try{fetch(GAS,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain"},body:JSON.stringify(Object.assign({sid,dev:innerWidth<800?"mobile":"desktop"},o))}).catch(()=>{})}catch(e){}}
+/* 回饋專用：不用 no-cors，讀取 GAS 回傳的 {ok:true} 才算送出成功（逾時 15 秒） */
+async function postAck(o){if(!GAS)return false;const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),15000);
+ try{const r=await fetch(GAS,{method:"POST",headers:{"Content-Type":"text/plain"},signal:ac.signal,body:JSON.stringify(Object.assign({sid,dev:innerWidth<800?"mobile":"desktop"},o))});
+  if(!r.ok)return false;const j=await r.json();return j&&j.ok===true}catch(e){return false}finally{clearTimeout(tm)}}
 /* 訪客地區：向 ipwho.is 查詢國家/城市（不記 IP），同一次瀏覽只查一次，查不到也不影響網頁 */
 const geoP=(async()=>{
  let g={tz:""};try{g.tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){}
@@ -74,15 +78,18 @@ let tm;const seenS={};
 function logSearch(q,n){clearTimeout(tm);tm=setTimeout(()=>{if(!GAS||seenS[q])return;seenS[q]=1;post({ev:"search",q:q.slice(0,60),n})},1200)}
 /* 意見回饋（位於常見問題頁下方） */
 let lastFb=0;
-document.addEventListener("click",e=>{if(e.target.id!="fbSend")return;
- const msg=$("#fbMsg").value.trim(),sx=$("#fbStat");
+document.addEventListener("click",async e=>{if(e.target.id!="fbSend")return;
+ const btn=e.target,msg=$("#fbMsg").value.trim(),sx=$("#fbStat");
  if($("#fbHp").value)return;
  if(msg.length<2){sx.textContent="請先輸入內容";return}
  if(!GAS){sx.textContent="回饋功能尚未啟用";return}
+ if(btn.dataset.busy){return}
  if(Date.now()-lastFb<30000){sx.textContent="請稍候再送出";return}
- lastFb=Date.now();
- post({ev:"feedback",t:$("#fbType").value,p:$("#fbPage").value,msg:msg.slice(0,500),c:$("#fbC").value.trim().slice(0,80)});
- $("#fbMsg").value="";$("#fbC").value="";sx.textContent="✅ 已送出，謝謝您的回饋！"});
+ btn.dataset.busy="1";sx.textContent="⏳ 送出中…";
+ const ok=await postAck({ev:"feedback",t:$("#fbType").value,p:$("#fbPage").value,msg:msg.slice(0,500),c:$("#fbC").value.trim().slice(0,80)});
+ delete btn.dataset.busy;
+ if(ok){lastFb=Date.now();$("#fbMsg").value="";$("#fbC").value="";sx.textContent="✅ 已送出，謝謝您的回饋！"}
+ else{sx.textContent="⚠️ 送出失敗，內容已保留，請檢查網路後再按一次「送出」。"}});
 async function showCount(){const el=$("#cnt");if(!GAS||!el)return;
  try{const r=await(await fetch(GAS+"?action=count")).json();if(r.ok)el.textContent="👥 累計訪客 "+r.total+" 人次"}catch(e){}}
 /* 截圖尚未放入 images/ 時，顯示「截圖待補」佔位框，避免破圖 */
